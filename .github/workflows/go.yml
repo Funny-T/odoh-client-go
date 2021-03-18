@@ -110,18 +110,30 @@ jobs:
           echo "GOOS: $GOOS, GOARCH: $GOARCH, GOARM: $GOARM, GOMIPS: $GOMIPS, RELEASE_NAME: $_NAME"
           echo "::set-output name=ASSET_NAME::$_NAME"
           echo "ASSET_NAME=$_NAME" >> $GITHUB_ENV
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.16.2
+
     - name: Get project dependencies
       run: go mod download
 
     - name: Build
-  
       run: |
           mkdir -p build_assets
           go build -v -o build_assets/odoh-client ./cmd/...
 
+    - name: Change the name
+      run: |
+          mv build_assets ODOH-client-$ASSET_NAME
+
     - name: Test
-      run: go test -o odoh-client ./cmd/...
+      run: go test -v -o build_assets/odoh-client ./cmd/...
+
+    - name: Upload files to Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+          name: ODOH-client-${{ steps.get_filename.outputs.ASSET_NAME }}
+          path: |
+            ./ODOH-client-${{ steps.get_filename.outputs.ASSET_NAME }}/*
