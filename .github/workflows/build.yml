@@ -126,7 +126,7 @@ jobs:
       if: matrix.goos == 'windows'
       run: |
           cd ./build_assets || exit 1
-          mv ODOH-client ODOH-client.exe
+          mv odoh-client ODOH-client.exe
     - name: Create ZIP archive
       shell: bash
       run: |
