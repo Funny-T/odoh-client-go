@@ -101,11 +101,11 @@ jobs:
       CGO_ENABLED: 0
     steps:
     - name: Checkout codebase
-        uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
     - name: Show workflow information 
-        id: get_filename
-        run: |
+      id: get_filename
+      run: |
           export _NAME=$(jq ".[\"$GOOS-$GOARCH$GOARM$GOMIPS\"].friendlyName" -r < .github/build/friendly-filenames.json)
           echo "GOOS: $GOOS, GOARCH: $GOARCH, GOARM: $GOARM, GOMIPS: $GOMIPS, RELEASE_NAME: $_NAME"
           echo "::set-output name=ASSET_NAME::$_NAME"
