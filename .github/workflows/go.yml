@@ -124,6 +124,12 @@ jobs:
           mkdir -p build_assets
           go build -v -o build_assets/odoh-client ./cmd/...
 
+    - name: Rename Windows ODOH-client
+      if: matrix.goos == 'windows'
+      run: |
+          cd ./build_assets || exit 1
+          mv ODOH-client ODOH-client.exe
+
     - name: Create ZIP archive
       shell: bash
       run: |
