@@ -148,9 +148,6 @@ jobs:
       run: |
           mv build_assets ODOH-client-$ASSET_NAME
 
-    - name: Test
-      run: go test -v -o build_assets/odoh-client ./cmd/...
-
     - name: Upload files to Artifacts
       uses: actions/upload-artifact@v2
       with:
